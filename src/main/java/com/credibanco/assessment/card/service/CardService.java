@@ -102,6 +102,7 @@ public class CardService {
             cardDTO.setOwner(card.getOwner());
             cardDTO.setDocumentId(card.getDocumentId());
             cardDTO.setStatus(card.getStatus());
+            cardDTO.setPhone(card.getPhone());
             return cardDTO;
         }else {
             throw new ResponseStatusException(

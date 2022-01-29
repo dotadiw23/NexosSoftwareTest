@@ -15,6 +15,7 @@ public class CardDTO<TYPE_CREDIT> {
     private String owner;
     private String documentId;
     private String status;
+    private String phone;
 
     public String getResponseCode() {
         return responseCode;
@@ -78,5 +79,13 @@ public class CardDTO<TYPE_CREDIT> {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

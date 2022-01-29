@@ -9,7 +9,9 @@ import com.credibanco.assessment.card.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -91,7 +93,7 @@ public class TransactionService {
             transactionDTO.setTransactionStatus(TransactionDTO.STATUS_REJECTED);
             return transactionDTO;
         } else {
-            TransactionModel dbTransaction = transactionRepository.findByReferenceNumber(transaction.getReferenceNumber());
+            TransactionModel dbTransaction = transactionRepository.findByReferenceNumberAndCardId(transaction.getReferenceNumber(), dbCard);
             if (dbTransaction == null) {
                 transactionDTO.setResponseCode("01");
                 transactionDTO.setMessage("Reference number not found");
@@ -131,6 +133,20 @@ public class TransactionService {
             }
             return transactionDTO;
         }
+    }
+
+    public List<TransactionDTO> getTransactions(String cardId) {
+        List<TransactionDTO> transactionsList = new ArrayList<>();
+        CardModel dbCard = new CardModel();
+        dbCard.setSystemId(cardId);
+        List<TransactionModel> transactions = (List<TransactionModel>) transactionRepository.findAllByCardId(dbCard);
+        for (TransactionModel transaction:
+             transactions) {
+            TransactionDTO transactionDTO = new TransactionDTO(transaction.getTransactionDate(),
+                    transaction.getReferenceNumber(), transaction.getStatus(), transaction.getTotal());
+            transactionsList.add(transactionDTO);
+        }
+        return transactionsList;
     }
 
     private void incompleteFormError(TransactionDTO transactionDTO) {

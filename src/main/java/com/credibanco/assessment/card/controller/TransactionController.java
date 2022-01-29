@@ -7,6 +7,8 @@ import com.credibanco.assessment.card.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/transaction")
 public class TransactionController {
@@ -22,6 +24,10 @@ public class TransactionController {
     @PutMapping
     public TransactionDTO cancelTransaction(@RequestBody TransactionModel transaction) {
         return transactionService.cancelTransaction(transaction);
+    }
+    @GetMapping(path = "/{cardId}")
+    public List<TransactionDTO> getTransactions(@PathVariable("cardId") String cardId) {
+        return transactionService.getTransactions(cardId);
     }
 
 }
