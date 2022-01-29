@@ -6,10 +6,6 @@ import javax.persistence.*;
 @Table(name = "cards")
 public class CardModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private Long id;
     private String number;
     private String owner;
     @Column(name="document_id")
@@ -19,15 +15,9 @@ public class CardModel {
     @Column(name="security_code")
     private String securityCode;
     private String status;
+    @Id
+    @Column(name="system_id", unique = true, nullable = false)
     private String systemId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNumber() {
         return number;
@@ -92,5 +82,4 @@ public class CardModel {
     public void setSystemId(String systemId) {
         this.systemId = systemId;
     }
-
 }
